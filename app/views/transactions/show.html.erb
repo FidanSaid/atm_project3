@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Debit:</strong>
+  <%= @transaction.debit %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @transaction.amount %>
+</p>
+
+<p>
+  <strong>Merchandise name:</strong>
+  <%= @transaction.merchandise_name %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @transaction.account_id %>
+</p>
+
+<p>
+  <strong>Atm machine:</strong>
+  <%= @transaction.atm_machine_id %>
+</p>
+
+<%= link_to 'Back', transactions_path,class:"btn btn-primary btn-sm" %>
+
+
+

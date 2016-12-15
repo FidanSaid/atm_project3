@@ -1,0 +1,25 @@
+
+<h3>ATM list  </h3><hr>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th><h3 >Address</h3></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @atm_machines.each do |atm_machine| %>
+      <tr>
+        <td><%= atm_machine.address %></td>
+        <td><%= link_to 'Show', atm_machine ,class:" btn-lg btn btn-info"%></td>
+ 
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+

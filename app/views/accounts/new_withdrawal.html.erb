@@ -1,0 +1,13 @@
+<div class="col-md-5 col-md-offset-5">
+  <br><br><br><br><br><br><br><br><br>  
+  <div class="col-md-5 col-md-offset-0 text-center">
+    <%= form_for @account, url: create_withdrawal_account_path, method: :post do |f| %>
+      <%= f.text_field :amount ,placeholder:"Please enter amount" ,class:"form-control"%>
+      <br><br>
+       <%= f.submit"Withdrawal",class:"btn-lg btn btn-danger" %><br><br>
+      <%=link_to'Back',atm_machine_path(session[:my_atm]),class:"btn btn-info btn-lg" %>
+  </div>
+</div>
+    <% end %><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <div class="col-md-5 col-md-offset-0 text-center">
+</div>

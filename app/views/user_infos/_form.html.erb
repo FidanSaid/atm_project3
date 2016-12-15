@@ -1,0 +1,45 @@
+
+<div class="col-md-5 col-md-offset-3 " style="padding-top:50px">
+  
+<%= form_for(@user_info) do |f| %>
+  <% if @user_info.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_info.errors.count, "error") %> prohibited this user_info from being saved:</h2>
+
+      <ul>
+      <% @user_info.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+
+  <div class="field">
+    <h3><%= f.label :first_name %><br></h3>
+    <%= f.text_field :first_name,placeholder:"Please enter your first name" ,class:"form-control" %>
+  </div>
+  <div class="field">
+    <h3><%= f.label :last_name %><br></h3>
+    <%= f.text_field :last_name ,placeholder:"Please enter your last name" ,class:"form-control" %>
+  </div>
+  <div class="field">
+    <h3><%= f.label :email %><br></h3>
+    <%= f.text_field :email ,placeholder:"Please enter your Email" ,class:"form-control"  %>
+  </div>
+  <div class="field">
+    <h3><%= f.label :phone %><br></h3>
+    <%= f.text_field :phone ,placeholder:"Please enter your Phone number" ,class:"form-control" %>
+  </div>
+  <div class="field">
+    
+    <%= f.hidden_field :user_id, value: current_user.id %>
+  </div>
+  <br>
+  <div class="actions">
+    <%= f.submit "Update",class:"btn btn-info btn-lg"%>
+  </div>
+<% end %>
+</div>

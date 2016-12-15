@@ -1,0 +1,25 @@
+<div class="container">
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Account number:</strong>
+  <%= @account.account_number %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @account.account_id %>
+</p>
+
+<p>
+  <strong>Balance:</strong>
+  <%= @account.balance %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @account.status %>
+</p>
+
+<%= link_to 'Edit', edit_account_path(@account) %> |
+<%= link_to 'Back', accounts_path %>
+</div> 

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  debit: false
+  amount: 9.99
+  merchandise_name: MyString
+  account_id: 1
+  atm_machine_id: 1
+
+two:
+  debit: false
+  amount: 9.99
+  merchandise_name: MyString
+  account_id: 1
+  atm_machine_id: 1

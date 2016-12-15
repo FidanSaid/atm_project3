@@ -1,0 +1,201 @@
+geocoded_by :address
+ after_validation :geocode, :if => :address_changed?
+ 
+ 
+ 
+ 
+ transaction(views)show
+  <%= link_to 'Edit', edit_transaction_path(@transaction) %> |
+  
+  
+  *****account_controller
+  def create
+    @account = Account.new(account_params)
+
+    respond_to do |format|
+      if @account.save
+        format.html { redirect_to @account, notice: 'Account was successfully created.' }
+        format.json { render :show, status: :created, location: @account }
+      else
+        format.html { render :new }
+        format.json { render json: @account.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
+  ***account(views_index)  
+  <%= link_to 'New Account', new_account_path %>
+   <td><%= link_to 'Edit', edit_account_path(account) %></td>
+        <td><%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  ************************** 
+  
+  
+  &&&&&(transaction views_index
+  <tr>
+    <td><% if debit %>
+            <%="Deposit"%>
+            <%else%>
+            <%="Withdrawal"%>
+            <%end%>
+    </td>
+  </tr>
+  
+  <%=link_to 'Back', atm_machine_path(session[:my_atm])%>
+  
+  <%= link_to 'New Transaction', new_transaction_path %>
+  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+  
+  
+  
+  
+  def limit_daily_deposit?(current_amount)
+    amounts_list = self.transactions.today.if ((Transaction.where("account_id =? and created_at>=? and debit=true",id,t,false).sum(:amount).to_f)+i[:amount].to_f) > 500
+          errors.add(:YOU,"Deposit more than a $1000 in same day is not allowed")       
+    sum = amounts_list.map(&:to_f).reduce(:+)
+    new_balance_today = sum.to_f + current_amount.to_f
+    if new_balance_today > 1000
+       false
+    else
+self.balance = balance.to_f + a[:amount].to_f
+        self.save         
+        return true
+    end
+    
+  end
+  
+  def max_withdrawal?(current_amount)
+    amounts_list = self.transactions.todayif ((Transaction.where("account_id =? and created_at>=? and debit=?",id,t,false).sum(:amount).to_f)+i[:amount].to_f) > 500
+          errors.add(:YOU,"Withdrawal more than a $500 in same day is not allowed")        
+      return false.pluck(:amount)
+          sum = amounts_list.map(&:to_f).reduce(:+)
+          
+          new_balance_today =  current_amount.to_f + sum.to_f 
+          if new_balance_today > 500
+              return true
+          else
+        false
+          end
+          
+  #==================================================        
+  transactions(views_index)
+  <%= link_to 'New Transaction', new_transaction_path %>
+  
+  <td><%= link_to 'Show', transaction %></td>
+        <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
+        <td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        
+        
+        <tbody>
+    <% @transactions.each do |transaction| %>
+      <tr>
+        <td><%= transaction.debit %></td>
+        <td><%= transaction.amount %></td>
+        <td><%= transaction.merchandise_name %></td>
+        <td><%= transaction.account_id %></td>
+        <td><%= transaction.atm_machine_id %></td>
+        
+      </tr>
+    <% end %>
+   <td><%=transaction.created_at.in_time_zone('Central Time (US & Canada)')%></td>
+  </tbody>
+  
+  <th>Account</th>
+  <th>Atm machine</th>
+  #=========================================================
+  transaction(views show)
+  <%=link_to 'Back', transactions_path(account_id: current_user.account.id) %>
+  ################################################
+  new_withdrawal.html.erb
+  <%= form_for  @account, :url => create_withdrawal_account_path, method: :post do |f| %>
+
+ <div class="col-md-5 col-md-offset-5">
+ 
+ <br><br><br><br><br><br><br><br><br>  
+ <div class="col-md-5 col-md-offset-0 text-center">
+   
+    <%= f.text_field :amount ,placeholder:"Please enter amount" ,class:"form-control"%>
+ 
+  
+  <br><br>
+
+    <%= f.submit"Withdrawal",class:"btn-lg btn btn-danger" %>
+  </div>
+  </div>
+ 
+  <% end %>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div class="col-md-5 col-md-offset-0 text-center">
+<%=link_to'Back',atm_machine_path(session[:my_atm]),class:"btn btn-info btn-lg" %>
+
+</div>
+
+
+<%= form_for @account, url: create_deposit_account_path, method: :post do |f| %>
+
+<div class="col-md-5 col-md-offset-5">
+  
+  
+  <div >
+    
+<br><br><br><br><br><br><br><br><br>    
+  <div class="col-md-5 col-md-offset-0 text-center">
+    <%= f.text_field :amount ,placeholder:"Please enter amount" ,class:"form-control"%>
+  
+  
+  
+  
+  
+<br><br>  
+    <%= f.submit "Deposit",class:"btn-lg btn btn-success"%>
+  </div>
+</div>
+
+<% end %>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div class="col-md-5 col-md-offset-0 text-center">
+  <%=link_to 'Back', atm_machine_path(session[:my_atm]) ,class:"btn btn-info btn-lg"%></div>
+  </div>
+
+
+
+#####################
+if i[:amount].to_f <= 0.0 # this  || i[:amount] == nil   will not work because we can't compare to undefine value(nil) and .to_f will always change the string to zero 
+
+
+def create_withdrawal
+     @account = Account.find(params[:id])
+   if withdrawal_params[:amount].to_f <= 500 && @account.withdrawal(withdrawal_params)
+      @account.transactions.create!(amount: withdrawal_params[:amount],atm_machine_id: session[:my_atm], debit:true)
+      flash[:notice] = " Withdrawal Complete Successfully"
+      redirect_to atm_machine_path(session[:my_atm])
+    else 
+      if withdrawal_params[:amount].to_f > 500
+      flash[:alert] = "Opps!Invalid amount,Please put a vaild amount"
+     else @account.errors.any?
+      flash[:alert] =@account.errors.full_messages.to_sentence
+      render :new_withdrawal
+      end
+      
+      
+      *********************
+      yield
+      <% if flash[:notice].present? %>
+      <div class="alert alert-info" id="flash_message" style="text-align: center">
+          <button class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
+          <%= notice %>
+      </div>
+  <% end %>
+      <% if flash[:alert].present? %>
+        <div class="alert alert-danger text-center" id="flash_message">
+        <button class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
+        <%= alert %>
+        </div>
+      <%end%>
+      
+      
+      
+      
+      
+      
+      
+         <td><%=transaction.created_at.in_time_zone('Central Time (US & Canada)')%></td>
